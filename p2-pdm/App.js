@@ -4,6 +4,7 @@ import countriesClient from './src/utils/countriesClient';
 
 export default function App() {
   const [termoBusca, setTermoBusca] = useState('');
+  const [termoBuscaCapital, setTermoBuscaCapital] = useState('');
   const [pais, setPais] = useState([]);
 
   const buscarPais = () => {
@@ -13,7 +14,15 @@ export default function App() {
         console.log("Dados do país:", resultado.data[0]);
       });
   }
-  
+
+  const buscarPaisPorCapital = () => {
+    countriesClient.get(`/v3.1/capital/${termoBuscaCapital}`)
+      .then(resultado => {
+        setPais(resultado.data);
+        console.log("Dados do país:", resultado.data[0]);
+      });
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Procurar País</Text>
@@ -23,10 +32,26 @@ export default function App() {
         onChangeText={(texto) => setTermoBusca(texto)}
         value={termoBusca}
       />
-      
+
       <Pressable 
         style={styles.button}
         onPress={buscarPais}
+      >
+        <Text style={styles.buttonText}>Buscar</Text>
+      </Pressable>
+
+
+      <Text style={styles.title}>Procurar País por Capital</Text>
+      
+      <TextInput 
+        style={styles.input}
+        onChangeText={(texto) => setTermoBuscaCapital(texto)}
+        value={termoBuscaCapital}
+      />
+      
+      <Pressable 
+        style={styles.button}
+        onPress={buscarPaisPorCapital}
       >
         <Text style={styles.buttonText}>Buscar</Text>
       </Pressable>
