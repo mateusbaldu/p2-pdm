@@ -1,8 +1,18 @@
 import { useState } from 'react';
 import { View, TextInput, Pressable, Text, StyleSheet } from 'react-native';
+import countriesClient from './src/utils/countriesClient';
 
 export default function App() {
   const [termoBusca, setTermoBusca] = useState('');
+  const [pais, setPais] = useState([]);
+
+  const buscarPais = () => {
+    countriesClient.get(`/v3.1/name/${termoBusca}`)
+      .then(resultado => {
+        setPais(resultado.data);
+        console.log("Dados do país:", resultado.data[0]);
+      });
+  }
   
   return (
     <View style={styles.container}>
@@ -16,7 +26,7 @@ export default function App() {
       
       <Pressable 
         style={styles.button}
-        onPress={() => console.log(termoBusca)}
+        onPress={buscarPais}
       >
         <Text style={styles.buttonText}>Buscar</Text>
       </Pressable>
