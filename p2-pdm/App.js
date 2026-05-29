@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { View, TextInput, Pressable, Text } from 'react-native';
+
 
 export default function App() {
+  const [termoBusca, setTermoBusca] = useState('');
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <TextInput 
+        onChangeText={(texto) => setTermoBusca(texto)}
+        value={termoBusca}
+      />
+      <Pressable onPress={() => console.log(termoBusca)}>
+        <Text>Buscar</Text>
+      </Pressable>
+
+      <Text>{termoBusca}</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
