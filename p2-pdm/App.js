@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, TextInput, Pressable, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Pressable, Text, StyleSheet, FlatList } from 'react-native';
 import countriesClient from './src/utils/countriesClient';
 
 export default function App() {
@@ -30,6 +30,28 @@ export default function App() {
       >
         <Text style={styles.buttonText}>Buscar</Text>
       </Pressable>
+
+      <FlatList
+        style={styles.list} 
+        data={pais}
+        renderItem={({ item }) => (
+          <View>
+            <View style={styles.listItem}>
+              <Text style={styles.listItemText}>Nome Comum do País: {item.name.common}</Text>
+            </View>
+            <View style={styles.listItem}>
+              <Text style={styles.listItemText}>Nome Oficial do País: {item.name.official}</Text>
+            </View>
+            <View style={styles.listItem}>
+              <Text style={styles.listItemText}>Nome do País em Russo: {item.translations.rus.common}</Text>
+            </View>
+            <View style={styles.listItem}>
+              <Text style={styles.listItemText}>Mapa do País (no OpenStreetMaps): {item.maps.openStreetMaps}</Text>
+            </View>
+          </View>
+        )}
+      />
+
     </View>
   );
 }
@@ -64,5 +86,26 @@ const styles = StyleSheet.create({
     padding: 8,
     textAlign: 'center',
     borderRadius: 4
+  },
+  list: {
+    borderWidth: 1, 
+    borderColor: 'black', 
+    width: '80%',
+    marginTop: 12,
+    borderRadius: 4,
+    padding: 8
+  },
+  listItem: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray',
+    backgroundColor: '#F0F0F0',
+    marginBottom: 4,
+    borderRadius: 4,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  listItemText: {
+    textAlign: 'center',
   }
 });
