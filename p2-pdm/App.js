@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, TextInput, Pressable, Text, StyleSheet, FlatList } from 'react-native';
+import { View, TextInput, Pressable, Text, StyleSheet, FlatList, Image } from 'react-native';
 import countriesClient from './src/utils/countriesClient';
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
         console.log("Dados do país:", resultado.data[0]);
       });
     limpaCampos()
-    }
+  }
 
   const buscarPaisPorCapital = () => {
     countriesClient.get(`/v3.1/capital/${termoBuscaCapital}`)
@@ -33,14 +33,14 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Procurar País</Text>
-      
-      <TextInput 
+
+      <TextInput
         style={styles.input}
         onChangeText={(texto) => setTermoBusca(texto)}
         value={termoBusca}
       />
 
-      <Pressable 
+      <Pressable
         style={styles.button}
         onPress={buscarPais}
       >
@@ -49,14 +49,14 @@ export default function App() {
 
 
       <Text style={styles.title}>Procurar País por Capital</Text>
-      
-      <TextInput 
+
+      <TextInput
         style={styles.input}
         onChangeText={(texto) => setTermoBuscaCapital(texto)}
         value={termoBuscaCapital}
       />
-      
-      <Pressable 
+
+      <Pressable
         style={styles.button}
         onPress={buscarPaisPorCapital}
       >
@@ -64,7 +64,7 @@ export default function App() {
       </Pressable>
 
       <FlatList
-        style={styles.list} 
+        style={styles.list}
         data={pais}
         renderItem={({ item }) => (
           <View>
@@ -80,6 +80,14 @@ export default function App() {
             <View style={styles.listItem}>
               <Text style={styles.listItemText}>Mapa do País (no OpenStreetMaps): {item.maps.openStreetMaps}</Text>
             </View>
+            <View style={styles.listItem}>
+              <Text style={styles.listItemText}>Bandeira do País:</Text>
+              <Image
+                source={{ uri: item.flags.png }}
+                style={{ width: 50, height: 50, marginLeft: 10 }}
+              />
+            </View>
+
           </View>
         )}
       />
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    textAlign: 'center'  
+    textAlign: 'center'
   },
   container: {
     flex: 1,
@@ -121,8 +129,8 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   list: {
-    borderWidth: 1, 
-    borderColor: 'black', 
+    borderWidth: 1,
+    borderColor: 'black',
     width: '80%',
     marginTop: 12,
     borderRadius: 4,
