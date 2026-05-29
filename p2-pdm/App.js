@@ -13,7 +13,8 @@ export default function App() {
         setPais(resultado.data);
         console.log("Dados do país:", resultado.data[0]);
       });
-  }
+    limpaCampos()
+    }
 
   const buscarPaisPorCapital = () => {
     countriesClient.get(`/v3.1/capital/${termoBuscaCapital}`)
@@ -21,6 +22,12 @@ export default function App() {
         setPais(resultado.data);
         console.log("Dados do país:", resultado.data[0]);
       });
+    limpaCampos()
+  }
+
+  const limpaCampos = () => {
+    setTermoBusca("")
+    setTermoBuscaCapital("")
   }
 
   return (
